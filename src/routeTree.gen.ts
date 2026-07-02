@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompanyIndexRouteImport } from './routes/company.index'
+import { Route as CompanyIntelligenceRouteImport } from './routes/company.intelligence'
 
 const CompanyRoute = CompanyRouteImport.update({
   id: '/company',
@@ -28,28 +29,36 @@ const CompanyIndexRoute = CompanyIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CompanyRoute,
 } as any)
+const CompanyIntelligenceRoute = CompanyIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => CompanyRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/company': typeof CompanyRouteWithChildren
+  '/company/intelligence': typeof CompanyIntelligenceRoute
   '/company/': typeof CompanyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/company/intelligence': typeof CompanyIntelligenceRoute
   '/company': typeof CompanyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/company': typeof CompanyRouteWithChildren
+  '/company/intelligence': typeof CompanyIntelligenceRoute
   '/company/': typeof CompanyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/company' | '/company/'
+  fullPaths: '/' | '/company' | '/company/intelligence' | '/company/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/company'
-  id: '__root__' | '/' | '/company' | '/company/'
+  to: '/' | '/company/intelligence' | '/company'
+  id: '__root__' | '/' | '/company' | '/company/intelligence' | '/company/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompanyIndexRouteImport
       parentRoute: typeof CompanyRoute
     }
+    '/company/intelligence': {
+      id: '/company/intelligence'
+      path: '/intelligence'
+      fullPath: '/company/intelligence'
+      preLoaderRoute: typeof CompanyIntelligenceRouteImport
+      parentRoute: typeof CompanyRoute
+    }
   }
 }
 
 interface CompanyRouteChildren {
+  CompanyIntelligenceRoute: typeof CompanyIntelligenceRoute
   CompanyIndexRoute: typeof CompanyIndexRoute
 }
 
 const CompanyRouteChildren: CompanyRouteChildren = {
+  CompanyIntelligenceRoute: CompanyIntelligenceRoute,
   CompanyIndexRoute: CompanyIndexRoute,
 }
 
