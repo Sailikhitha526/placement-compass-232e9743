@@ -15,10 +15,6 @@ function CompanyLayout() {
     return <Navigate to="/" />;
   }
 
-  if (pathname === "/company" || pathname === "/company/") {
-    return <Navigate to="/company/intelligence" replace />;
-  }
-
   const section = pathname.includes("/skills")
     ? "Skill Intelligence"
     : "Company Intelligence";
